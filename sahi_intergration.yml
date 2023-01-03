@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  name: SahiAgent
+  name: LocalMachine
 
 steps:
 - task: DownloadSecureFile@1
