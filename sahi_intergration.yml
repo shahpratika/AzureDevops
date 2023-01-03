@@ -3,7 +3,7 @@ trigger:
 
 pool:
   name: SahiAgent
-agnet: LocalMachine
+agent: LocalMachine
 steps:
 - task: DownloadSecureFile@1
   inputs:
