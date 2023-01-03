@@ -2,8 +2,8 @@ trigger:
 - main
 
 pool: SahiAgent
-demands: 
-- agent.name -equals LocalMachine
+
+
 steps:
 - task: DownloadSecureFile@1
   inputs:
