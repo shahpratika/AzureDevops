@@ -5,9 +5,9 @@
  */
 -->
 <project name="demo" default="start_sahipro_run_scripts">
-	<property name="sahi.home.dir" value="D:/sahi_pro"/>
+	<property name="test.deploy.dir.pro" value="C:/sahi_pro"/>
 	
-	<taskdef name="sahi" classname="net.sf.sahi.ant.RunSahiTask" classpath="${sahi.home.dir}/lib/ant-sahi.jar"/>
+	<taskdef name="sahi" classname="net.sf.sahi.ant.RunSahiTask" classpath="${test.deploy.dir.pro}/lib/ant-sahi.jar"/>
 	
 	<target name="start_sahipro_run_scripts">
 		<parallel>
@@ -24,66 +24,64 @@
 	<target name="run_sahitests" depends="runtestschrome, stopsahi, failsahichrome" />
 	
 	<target name="stopsahi" description="stop sahi server">
-		<taskdef name="sahi" classname="net.sf.sahi.ant.RunSahiTask" classpath="${sahi.home.dir}/lib/ant-sahi.jar"/>	
+		<taskdef name="sahi" classname="net.sf.sahi.ant.RunSahiTask" classpath="${test.deploy.dir.pro}/lib/ant-sahi.jar"/>	
         <sahi stop="true" sahihost="localhost" sahiport="9999"/>
     </target>
 	
-	<target name="copy-scripts-to-sahi-dir"> 
-		<copy todir="${sahi.home.dir}/userdata/scripts"> 
-			<fileset dir="userdata/scripts" /> 
-		</copy> 
+	<target name="clean_html_logs">
+		<delete dir="${test.deploy.dir.pro}/userdata/sahi_reports"/>
 	</target>
-
+	
 	<target name="start_sahi" description="starts proxy from deployed folder">
 		<java classname="net.sf.sahi.Proxy" fork="true">
 			<jvmarg
 	               line="-Xmx512m -Xms64m -Djdk.http.ntlm.transparentAuth=allHosts"/>
 			<classpath>
-				<fileset dir="${sahi.home.dir}/userdata/extlib">
+				<fileset dir="${test.deploy.dir.pro}/userdata/extlib">
 					<include name="**/*.jar"/>
 				</fileset>
-				<pathelement location="${sahi.home.dir}/lib/sahi.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/rhino/js.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/db/h2.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/license/truelicense.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/license/truexml.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/poi/dom4j-2.1.3.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/poi/excelpoi.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/poi/poi.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/poi/poi-ooxml.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/poi/poi-ooxml-schemas.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/poi/xmlbeans.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/poi/commons-math3-3.6.1.jar" />
-				<pathelement location="${sahi.home.dir}/extlib/poi/commons-compress-1.21.jar" />
-				<pathelement location="${sahi.home.dir}/extlib/poi/commons-collections4-4.4.jar" />
-				<pathelement location="${sahi.home.dir}/extlib/poi/SparseBitSet-1.2.jar" />
-				<pathelement location="${sahi.home.dir}/extlib/c3p0/c3p0-0.9.5.5.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/c3p0/mchange-commons-java-0.2.20.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/javassist/javassist.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/sahi/sahiapplet.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/apacheclient/commons-codec-1.10.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/apacheclient/commons-logging-1.2.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/apacheclient/fluent-hc-4.5.6.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/apacheclient/httpclient-4.5.6.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/apacheclient/httpclient-cache-4.5.6.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/apacheclient/httpclient-win-4.5.6.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/apacheclient/httpcore-4.4.10.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/apacheclient/httpmime-4.5.6.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/apacheclient/jna-4.4.0.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/apacheclient/jna-platform-4.4.0.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/brotli/dec-0.2.0.jar"/>
-				<pathelement location="${sahi.home.dir}/extlib/jgit/org.eclipse.jgit-5.7.0.202003110725-r.jar"/>
-			    <pathelement location="${sahi.home.dir}/extlib/jgit/slf4j-api-1.7.25.jar"/>
-			    <pathelement location="${sahi.home.dir}/extlib/jgit/slf4j-simple-1.7.25.jar"/>
-			    <pathelement location="${sahi.home.dir}/extlib/jgit/bcpg-jdk15on-1.64.jar"/>
-			    <pathelement location="${sahi.home.dir}/extlib/jgit/bcpkix-jdk15on-1.64.jar"/>
-			    <pathelement location="${sahi.home.dir}/extlib/jgit/bcprov-jdk15on-1.64.jar"/>
-			    <pathelement location="${sahi.home.dir}/extlib/jgit/JavaEWAH-1.1.7.jar"/>
-			    <pathelement location="${sahi.home.dir}/extlib/jgit/jsch-0.1.55.jar"/>
-			    <pathelement location="${sahi.home.dir}/extlib/jgit/jzlib-1.1.1.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/lib/sahi.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/rhino/js.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/db/h2.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/license/truelicense.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/license/truexml.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/poi/dom4j-2.1.3.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/poi/excelpoi.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/poi/poi.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/poi/poi-ooxml.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/poi/poi-ooxml-schemas.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/poi/xmlbeans.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/poi/commons-math3-3.6.1.jar" />
+				<pathelement location="${test.deploy.dir.pro}/extlib/poi/commons-compress-1.21.jar" />
+				<pathelement location="${test.deploy.dir.pro}/extlib/poi/commons-collections4-4.4.jar" />
+				<pathelement location="${test.deploy.dir.pro}/extlib/poi/SparseBitSet-1.2.jar" />
+				<pathelement location="${test.deploy.dir.pro}/extlib/c3p0/c3p0-0.9.5.5.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/c3p0/mchange-commons-java-0.2.20.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/javassist/javassist.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/sahi/sahiapplet.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/apacheclient/commons-codec-1.10.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/apacheclient/commons-logging-1.2.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/apacheclient/fluent-hc-4.5.6.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/apacheclient/httpclient-4.5.6.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/apacheclient/httpclient-cache-4.5.6.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/apacheclient/httpclient-win-4.5.6.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/apacheclient/httpcore-4.4.10.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/apacheclient/httpmime-4.5.6.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/apacheclient/jna-4.4.0.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/apacheclient/jna-platform-4.4.0.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/brotli/dec-0.2.0.jar"/>
+				<pathelement location="${test.deploy.dir.pro}/extlib/jgit/org.eclipse.jgit-5.7.0.202003110725-r.jar"/>
+			    <pathelement location="${test.deploy.dir.pro}/extlib/jgit/slf4j-api-1.7.25.jar"/>
+			    <pathelement location="${test.deploy.dir.pro}/extlib/jgit/slf4j-simple-1.7.25.jar"/>
+			    <pathelement location="${test.deploy.dir.pro}/extlib/jgit/bcpg-jdk15on-1.64.jar"/>
+			    <pathelement location="${test.deploy.dir.pro}/extlib/jgit/bcpkix-jdk15on-1.64.jar"/>
+			    <pathelement location="${test.deploy.dir.pro}/extlib/jgit/bcprov-jdk15on-1.64.jar"/>
+			    <pathelement location="${test.deploy.dir.pro}/extlib/jgit/JavaEWAH-1.1.7.jar"/>
+			    <pathelement location="${test.deploy.dir.pro}/extlib/jgit/jsch-0.1.55.jar"/>
+			    <pathelement location="${test.deploy.dir.pro}/extlib/jgit/jzlib-1.1.1.jar"/>
 			</classpath>
-			<arg value="${sahi.home.dir}" id="basePath"/>
-			<arg value="${sahi.home.dir}/userdata/" id="userdataPath"/>
+			<arg value="${test.deploy.dir.pro}" id="basePath"/>
+			<arg value="${test.deploy.dir.pro}/userdata/" id="userdataPath"/>
 		</java>
 	</target>
 
@@ -95,8 +93,8 @@
 	
 	
 	<target name="set_properties_chrome" depends="set_timestamp">
-    	<property name="scriptDir" value="${sahi.home.dir}/userdata/scripts/"/>
-    	<property name="scriptName" value="Whimstay/Property_listing.sah"/>
+    	<property name="scriptDir" value="C:/sahi_pro/userdata/scripts/"/>
+    	<property name="scriptName" value="demo/small.suite"/>
 		<property name="browser" value="chrome"/>
 		<property name="startWith" value="BROWSER"/>
 		<property name="sendemail" value="false"/>
@@ -122,7 +120,7 @@
 		<property name="jsCodeCoverage" value="false"/>
 	</target>
 
-	<target name="runtestschrome" depends="copy-scripts-to-sahi-dir, set_properties_chrome">
+	<target name="runtestschrome" depends="clean_html_logs, set_properties_chrome">
 		<sahi suite="${scriptName}"
 			browsertype="${browser}"
 			startWith="${startWith}"
@@ -149,7 +147,7 @@
 			isAutohealEnabled="${isAutohealEnabled}"
 			suiteTimeOut="${suiteTimeOut}"
 			jsCodeCoverage="${jsCodeCoverage}">
-			<report type="html" logdir="${sahi.home.dir}/userdata/sahi_reports"/>
+			<report type="html" logdir="${test.deploy.dir.pro}/userdata/sahi_reports"/>
 		</sahi>
 	</target>
 
