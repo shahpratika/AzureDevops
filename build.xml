@@ -5,7 +5,7 @@
  */
 -->
 <project name="demo" default="start_sahipro_run_scripts">
-	<property name="test.deploy.dir.pro" value="C:/sahi_pro"/>
+	<property name="test.deploy.dir.pro" value="D:/sahi_pro"/>
 	
 	<taskdef name="sahi" classname="net.sf.sahi.ant.RunSahiTask" classpath="${test.deploy.dir.pro}/lib/ant-sahi.jar"/>
 	
@@ -93,7 +93,7 @@
 	
 	
 	<target name="set_properties_chrome" depends="set_timestamp">
-    	<property name="scriptDir" value="C:/sahi_pro/userdata/scripts/"/>
+    	<property name="scriptDir" value="${test.deploy.dir.pro}/userdata/scripts/"/>
     	<property name="scriptName" value="demo/small.suite"/>
 		<property name="browser" value="chrome"/>
 		<property name="startWith" value="BROWSER"/>
