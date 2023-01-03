@@ -1,7 +1,9 @@
 trigger:
 - main
 
-pool: SahiAgent
+pool: 
+    name: SahiAgent
+
 
 
 steps:
